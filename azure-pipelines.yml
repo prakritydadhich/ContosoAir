@@ -1,19 +1,18 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 pool:
   vmImage: ubuntu-16.04
 trigger:
   - master
 steps:
   - task: Npm@1
+    displayName: 'npm custom'
     inputs:
-      command: install
-  - script: 'npm test'
+      command: custom
+      verbose: false
+      customCommand: 'install --production'
+  - script: npm test
     displayName: 'Run unit tests'
     continueOnError: true
+
   - task: PublishTestResults@2
     displayName: 'Publish Test Results'
     condition: succeededOrFailed()
