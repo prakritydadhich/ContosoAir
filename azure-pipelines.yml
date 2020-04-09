@@ -4,12 +4,14 @@ trigger:
   - master
 steps:
   - task: Npm@1
+    displayName: 'npm custom'
     inputs:
-      command: install
-  - script: |
-     npm test
+      command: custom
+      verbose: false
+      customCommand: 'install --production'
     displayName: 'Run unit tests'
     continueOnError: true
+
   - task: PublishTestResults@2
     displayName: 'Publish Test Results'
     condition: succeededOrFailed()
